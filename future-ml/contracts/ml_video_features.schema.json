@@ -1,0 +1,193 @@
+{
+  "$defs": {
+    "RetentionFeatures": {
+      "description": "Observed YouTube retention curve, as parallel arrays (raw, unsmoothed).",
+      "properties": {
+        "time_ratio": {
+          "default": [],
+          "items": {
+            "type": "number"
+          },
+          "title": "Time Ratio",
+          "type": "array"
+        },
+        "audience_watch_ratio": {
+          "default": [],
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Audience Watch Ratio",
+          "type": "array"
+        },
+        "relative_retention_performance": {
+          "default": [],
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Relative Retention Performance",
+          "type": "array"
+        }
+      },
+      "title": "RetentionFeatures",
+      "type": "object"
+    }
+  },
+  "description": "Versioned contract handed to the ML team for a creator's video.\n\nAnything not computed in this phase is None / empty ({}), never faked.\nRatios: average_view_percentage is 0-1 here (YouTube's percent / 100).",
+  "properties": {
+    "feature_schema_version": {
+      "default": "1.0",
+      "title": "Feature Schema Version",
+      "type": "string"
+    },
+    "video_id": {
+      "title": "Video Id",
+      "type": "string"
+    },
+    "title": {
+      "title": "Title",
+      "type": "string"
+    },
+    "category": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Category"
+    },
+    "duration_seconds": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Duration Seconds"
+    },
+    "views": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Views"
+    },
+    "likes": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Likes"
+    },
+    "comments": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Comments"
+    },
+    "average_view_duration": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Average View Duration"
+    },
+    "average_view_percentage": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Average View Percentage"
+    },
+    "retention": {
+      "$ref": "#/$defs/RetentionFeatures",
+      "default": {
+        "time_ratio": [],
+        "audience_watch_ratio": [],
+        "relative_retention_performance": []
+      }
+    },
+    "analytics_features": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Analytics Features",
+      "type": "object"
+    },
+    "content_features": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Content Features",
+      "type": "object"
+    },
+    "audio_features": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Audio Features",
+      "type": "object"
+    },
+    "language_features": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Language Features",
+      "type": "object"
+    },
+    "retention_features": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Retention Features",
+      "type": "object"
+    }
+  },
+  "required": [
+    "video_id",
+    "title"
+  ],
+  "title": "MLVideoFeatures",
+  "type": "object"
+}

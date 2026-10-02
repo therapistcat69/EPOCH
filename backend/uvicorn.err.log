@@ -1,0 +1,8 @@
+INFO:     Will watch for changes in these directories: ['C:\\EPOCH\\backend']
+INFO:     Uvicorn running on http://127.0.0.1:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [30604] using WatchFiles
+DATABASE_URL is not a Postgres connection string (expected postgresql://...). Falling back to local SQLite for development.
+INFO:     Started server process [31792]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'dump_contracts.py'. Reloading...

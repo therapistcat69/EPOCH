@@ -1,0 +1,30 @@
+# secrets
+.env
+.env.*
+!.env.example
+
+# Google credentials / tokens / downloaded reports (never commit)
+client_secret*.json
+*credentials*.json
+credentials/
+tokens/
+reports/
+
+# python
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+*.db
+
+# node / next
+node_modules/
+.next/
+out/
+*.tsbuildinfo
+next-env.d.ts
+
+# misc
+.DS_Store
+.vscode/
+.idea/

@@ -1,0 +1,41 @@
+{
+  "description": "Shape the future model service must return.",
+  "properties": {
+    "model_name": {
+      "title": "Model Name",
+      "type": "string"
+    },
+    "model_version": {
+      "title": "Model Version",
+      "type": "string"
+    },
+    "score": {
+      "title": "Score",
+      "type": "number"
+    },
+    "prediction": {
+      "title": "Prediction",
+      "type": "string"
+    },
+    "confidence": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Confidence"
+    }
+  },
+  "required": [
+    "model_name",
+    "model_version",
+    "score",
+    "prediction"
+  ],
+  "title": "PredictResponse",
+  "type": "object"
+}

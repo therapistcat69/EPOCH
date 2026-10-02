@@ -1,0 +1,5 @@
+INFO:     127.0.0.1:63098 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63100 - "GET /api/auth/youtube/login HTTP/1.1" 302 Found
+INFO:     127.0.0.1:63102 - "GET /api/auth/me HTTP/1.1" 200 OK
+INFO:     127.0.0.1:63104 - "GET /api/analytics/overview HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:63106 - "POST /api/analyze HTTP/1.1" 200 OK

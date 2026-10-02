@@ -1,0 +1,46 @@
+
+> frontend@0.1.0 dev
+> next dev
+
+[1m[38;2;173;127;168m▲ Next.js 16.3.8[39m[22m (Turbopack)
+- Local:         http://localhost:3000
+- Network:       http://192.168.65.1:3000
+- Environments: .env.local
+[32m[1m✓[22m[39m Ready in 4.3s
+[32m[1m✓[22m[39m Running next.config.ts took 35ms
+
+[37m[1m○[22m[39m Compiling / ...
+ GET / [32m200[39m in 17.7s[2m (next.js: 17.1s, application-code: 644ms)[22m
+ GET / [32m200[39m in 206ms[2m (next.js: 79ms, application-code: 127ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 1900ms[2m (next.js: 1866ms, application-code: 34ms)[22m
+[32m[1m✓[22m[39m Compiled in 120ms
+[32m[1m✓[22m[39m Compiled in 70ms
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 144ms[2m (next.js: 53ms, application-code: 91ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 45ms[2m (next.js: 8ms, application-code: 37ms)[22m
+[32m[1m✓[22m[39m Compiled in 134ms
+[32m[1m✓[22m[39m Compiled in 172ms
+[32m[1m✓[22m[39m Compiled in 437ms
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 751ms[2m (next.js: 568ms, application-code: 183ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 636ms[2m (next.js: 65ms, application-code: 571ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 634ms[2m (next.js: 157ms, application-code: 477ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 631ms[2m (next.js: 236ms, application-code: 396ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 634ms[2m (next.js: 374ms, application-code: 259ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 586ms[2m (next.js: 386ms, application-code: 200ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 586ms[2m (next.js: 457ms, application-code: 129ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 278ms[2m (next.js: 64ms, application-code: 214ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 285ms[2m (next.js: 139ms, application-code: 146ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 281ms[2m (next.js: 199ms, application-code: 83ms)[22m
+[32m[1m✓[22m[39m Compiled in 129ms
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 598ms[2m (next.js: 222ms, application-code: 376ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 287ms[2m (next.js: 73ms, application-code: 214ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 286ms[2m (next.js: 115ms, application-code: 171ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 281ms[2m (next.js: 149ms, application-code: 132ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 261ms[2m (next.js: 172ms, application-code: 89ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 261ms[2m (next.js: 211ms, application-code: 50ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 294ms[2m (next.js: 45ms, application-code: 249ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 299ms[2m (next.js: 80ms, application-code: 219ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 298ms[2m (next.js: 122ms, application-code: 176ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 298ms[2m (next.js: 158ms, application-code: 140ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 298ms[2m (next.js: 206ms, application-code: 92ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 298ms[2m (next.js: 241ms, application-code: 57ms)[22m
+ GET /report/cd66fb3e-778a-415c-a287-d96788eb6b53 [32m200[39m in 61ms[2m (next.js: 20ms, application-code: 40ms)[22m
