@@ -1,4 +1,5 @@
 import { request } from "./api";
+import { clearRetainAISession, getRetainAISession } from "./auth";
 
 export type Metrics = {
   views: number | null;
@@ -70,8 +71,34 @@ const q = (r: Range, extra: Record<string, string | number | undefined> = {}) =>
 const post = { method: "POST" } as const;
 
 export const api = {
-  me: () => request<Me>("/api/auth/me"),
-  logout: () => request<{ ok: boolean }>("/api/auth/logout", post),
+  me: async (): Promise<Me> => {
+    try {
+      const backendMe = await request<Me>("/api/auth/me");
+      if (backendMe?.authenticated) {
+        return backendMe;
+      }
+    } catch {
+      // Backend unauthenticated or offline
+    }
+    const localUser = getRetainAISession();
+    if (localUser) {
+      return {
+        authenticated: true,
+        user: { name: localUser.name, email: localUser.email, image: null },
+        channel: null,
+      };
+    }
+    return { authenticated: false, user: null, channel: null };
+  },
+  logout: async () => {
+    clearRetainAISession();
+    try {
+      await request<{ ok: boolean }>("/api/auth/logout", post);
+    } catch {
+      // ignore
+    }
+    return { ok: true };
+  },
   channel: () => request<OwnedChannel>("/api/channel/me"),
   overview: (r: Range, refresh = false) => request<Envelope & { metrics: Metrics }>(`/api/analytics/overview${q(r, { refresh: refresh ? "true" : undefined })}`),
   timeseries: (r: Range) => request<Envelope & { points: Point[] }>(`/api/analytics/timeseries${q(r)}`),

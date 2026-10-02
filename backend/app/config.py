@@ -1,11 +1,21 @@
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import AliasChoices, Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+# Search for .env in: backend dir → EPOCH root → kjsit root
+_HERE = Path(__file__).resolve().parent.parent  # d:\kjsit\EPOCH\backend
+_CANDIDATES = [
+    _HERE / ".env",              # d:\kjsit\EPOCH\backend\.env
+    _HERE.parent / ".env",       # d:\kjsit\EPOCH\.env
+    _HERE.parent.parent / ".env" # d:\kjsit\.env
+]
+_ENV_FILE = next((str(p) for p in _CANDIDATES if p.exists()), ".env")
+
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_file=".env", extra="ignore", populate_by_name=True)
+    model_config = SettingsConfigDict(env_file=_ENV_FILE, extra="ignore", populate_by_name=True)
 
     youtube_api_key: str = ""
     database_url: str = ""
