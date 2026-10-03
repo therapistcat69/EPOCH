@@ -12,6 +12,7 @@ import Overview from "@/components/dashboard/Overview";
 import ChannelIntelligence from "@/components/intel/ChannelIntelligence";
 import RetentionPanel from "@/components/dashboard/Retention";
 import { Empty, ErrorBox, Loading } from "@/components/dashboard/ui";
+import RetainLoadingState from "@/components/RetainLoadingState";
 import Videos from "@/components/dashboard/Videos";
 import { ApiError } from "@/lib/api";
 import { api, loginUrl, type OwnedVideo, type Range } from "@/lib/creator-api";
@@ -29,7 +30,7 @@ const PRESETS: [string, number][] = [
 
 export default function Dashboard() {
   return (
-    <Suspense fallback={<Loading label="Initializing RetainAI cockpit..." />}>
+    <Suspense fallback={<Loading label="Loading your dashboard" sub="Fetching your latest data..." />}>
       <DashboardContent />
     </Suspense>
   );
@@ -102,14 +103,18 @@ function DashboardContent() {
     }
   };
 
-  if (me.isLoading) return <Loading label="Verifying creator session…" />;
+  if (me.isLoading) return <Loading label="Loading your dashboard" sub="Fetching your latest data..." />;
   if (me.error) return <div className="mx-auto max-w-xl p-8"><ErrorBox error={me.error} /></div>;
-  if (!authed) return <Loading label="Redirecting to sign in…" />;
+  if (!authed) return <Loading label="Loading your dashboard" sub="Redirecting to sign in…" />;
 
   if (hasChannel) {
     const needsAuth = (e: unknown) =>
       e instanceof ApiError && ["NOT_AUTHENTICATED", "REAUTH_REQUIRED", "TOKEN_INVALID"].includes(e.code);
     if (needsAuth(channel.error)) router.replace("/login?error=REAUTH_REQUIRED");
+  }
+
+  if (hasChannel && channel.isLoading) {
+    return <Loading label="Fetching your YouTube data" sub="Loading your latest analytics..." />;
   }
 
   // ============================================================
@@ -162,16 +167,39 @@ function DashboardContent() {
           </div>
 
           <div className="flex items-center gap-2.5">
-            <a href="/trends" className="rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs font-semibold text-white transition-all duration-200 hover:bg-white/[0.08]">Trends</a>
-            <a href="/benchmark" className="rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs font-semibold text-white transition-all duration-200 hover:bg-white/[0.08]">Benchmark</a>
-            <a href="/models" className="rounded-xl border border-white/10 bg-white/[0.03] px-3.5 py-2 text-xs font-semibold text-white transition-all duration-200 hover:bg-white/[0.08]">Models</a>
+            <a
+              href="/trends"
+              className="nav-trace-btn px-3.5 py-2 text-xs font-semibold"
+            >
+              <span className="relative z-10">Trends</span>
+            </a>
+            <a
+              href="/benchmark"
+              className="nav-trace-btn px-3.5 py-2 text-xs font-semibold"
+            >
+              <span className="relative z-10">Benchmark</span>
+            </a>
+            <a
+              href="/models"
+              className="nav-trace-btn px-3.5 py-2 text-xs font-semibold"
+            >
+              <span className="relative z-10">Models</span>
+            </a>
+            <a
+              href="/analyze"
+              className="nav-trace-btn px-3.5 py-2 text-xs font-semibold"
+            >
+              <span className="relative z-10">Analyze</span>
+            </a>
             <button
               onClick={() => start.mutate()}
               disabled={syncing}
-              className="flex items-center gap-2 rounded-xl bg-white/[0.03] hover:bg-white/[0.08] border border-white/10 px-3.5 py-2 text-xs font-semibold text-white transition-all duration-200 disabled:opacity-50"
+              className="nav-trace-btn px-3.5 py-2 text-xs font-semibold disabled:opacity-50 disabled:pointer-events-none"
             >
-              {syncing ? <Loader2 className="size-3.5 animate-spin text-[#ff1f3d]" /> : <RefreshCw className="size-3.5 text-[#ff1f3d]" />}
-              <span>{syncing ? (status.data?.step ?? "Syncing YouTube...") : "Sync Data"}</span>
+              <span className="relative z-10 flex items-center gap-2">
+                <RefreshCw className={`size-3.5 text-[#ff1f3d] ${syncing ? "animate-spin" : ""}`} />
+                <span>{syncing ? "Syncing…" : "Sync Data"}</span>
+              </span>
             </button>
             <LogoutButton onLogout={() => logout.mutate()} isLoggingOut={logout.isPending} />
           </div>
@@ -188,10 +216,20 @@ function DashboardContent() {
           </div>
         )}
 
-        {/* ============================================================
-            CHANNEL HERO / OVERVIEW BAR (Personalized Creator Identity)
-            ============================================================ */}
-        <section className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#09090d]/90 backdrop-blur-2xl p-5 sm:p-6 shadow-2xl">
+        {syncing ? (
+          <div className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#09090d]/90 backdrop-blur-2xl p-8 sm:p-14 shadow-2xl">
+            <RetainLoadingState
+              title="Syncing your YouTube data"
+              subtitle={status.data?.step ?? "Fetching your latest analytics..."}
+              minHeight="min-h-[380px]"
+            />
+          </div>
+        ) : (
+          <>
+            {/* ============================================================
+                CHANNEL HERO / OVERVIEW BAR (Personalized Creator Identity)
+                ============================================================ */}
+            <section className="relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#09090d]/90 backdrop-blur-2xl p-5 sm:p-6 shadow-2xl">
           {/* Subtle Accent Glow behind Avatar */}
           <div
             className="pointer-events-none absolute -left-10 -top-10 size-48 rounded-full blur-[60px] opacity-40"
@@ -420,6 +458,8 @@ function DashboardContent() {
             </div>
           )}
         </main>
+          </>
+        )}
       </div>
     </div>
   );

@@ -10,7 +10,7 @@ import { api } from "@/lib/creator-api";
 export default function BenchmarkPage() {
   const me = useQuery({ queryKey: ["me"], queryFn: api.me });
   return (
-    <main className="mx-auto w-full max-w-6xl space-y-4 px-4 py-6">
+    <main className="mx-auto w-full max-w-6xl space-y-4 px-4 py-6 page-section-enter">
       <Link href="/dashboard" className="flex items-center gap-1 text-sm text-neutral-500 hover:underline"><ArrowLeft className="size-4" /> Dashboard</Link>
       <header>
         <p className="text-xs font-semibold tracking-[0.3em] text-red-500">RETAINAI</p>

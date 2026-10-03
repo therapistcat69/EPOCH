@@ -2,6 +2,8 @@
 
 import { AlertCircle, Loader2 } from "lucide-react";
 import type { ReactNode } from "react";
+import RetainLoadingState from "@/components/RetainLoadingState";
+import InfinityLoop from "@/components/InfinityLoop";
 
 export function Card({
   title,
@@ -67,12 +69,30 @@ export function Stat({
   );
 }
 
-export function Loading({ label = "Loading…" }: { label?: string }) {
+export function Loading({
+  label = "Loading your dashboard",
+  sub = "Fetching your latest data...",
+  compact = false,
+}: {
+  label?: string;
+  sub?: string;
+  compact?: boolean;
+}) {
+  if (compact) {
+    return (
+      <div role="status" className="flex items-center justify-center gap-2.5 py-4 text-xs text-neutral-400">
+        <InfinityLoop className="h-5 w-8" glow={false} />
+        <span className="font-mono text-[11px] uppercase tracking-wider">{label}</span>
+      </div>
+    );
+  }
+
   return (
-    <div className="flex items-center justify-center gap-3 py-12 text-sm text-neutral-400">
-      <Loader2 className="size-4 animate-spin text-[#ff1f3d]" />
-      <span className="tracking-wide font-mono text-xs uppercase">{label}</span>
-    </div>
+    <RetainLoadingState
+      title={label}
+      subtitle={sub}
+      minHeight="min-h-[260px]"
+    />
   );
 }
 

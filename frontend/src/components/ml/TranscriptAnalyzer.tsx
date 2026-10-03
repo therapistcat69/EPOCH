@@ -4,6 +4,7 @@ import { useMutation } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
 import { useState } from "react";
 import { Card, ErrorBox } from "@/components/dashboard/ui";
+import RetainLoadingState from "@/components/RetainLoadingState";
 import { clock } from "@/lib/format";
 import { ml } from "@/lib/ml-api";
 import ModelBanner from "./ModelBanner";
@@ -38,11 +39,20 @@ export default function TranscriptAnalyzer() {
             <option value="txt" className="text-black">TXT</option><option value="srt" className="text-black">SRT</option><option value="vtt" className="text-black">VTT</option>
           </select>
           <input type="file" accept=".txt,.srt,.vtt" onChange={(e) => onFile(e.target.files?.[0])} className="text-sm" />
-          <button disabled={run.isPending || !content.trim()} className="ml-auto flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 font-medium text-white disabled:opacity-60">
-            {run.isPending && <Loader2 className="size-4 animate-spin" />} Predict retention
+          <button disabled={run.isPending || !content.trim()} className="ml-auto flex items-center gap-2 rounded-lg bg-red-600 px-4 py-2 font-medium text-white disabled:opacity-60 transition-opacity">
+            {run.isPending && <Loader2 className="size-4 animate-spin" />} {run.isPending ? "Predicting…" : "Predict retention"}
           </button>
         </div>
       </form>
+      {run.isPending && (
+        <div className="rounded-2xl border border-white/[0.08] bg-[#09090d]/80 p-6 sm:p-8 backdrop-blur-xl shadow-2xl">
+          <RetainLoadingState
+            title="Predicting audience retention"
+            subtitle="Evaluating potential drop-off points..."
+            minHeight="min-h-[220px]"
+          />
+        </div>
+      )}
       {run.isError && <ErrorBox error={run.error} />}
       {d && (
         <div className="space-y-4">

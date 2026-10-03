@@ -6,6 +6,15 @@
   --accent-red: #ff1a1a;
   --accent-red-hover: #e01414;
   --bg-dark: #050505;
+
+  /*
+   * Hero headline font stack.
+   * --font-space-grotesk is injected by next/font/google in layout.tsx.
+   * Falls back cleanly if the variable is not yet available.
+   */
+  --font-hero: var(--font-space-grotesk), "Space Grotesk", "Inter",
+               "Helvetica Neue", -apple-system, BlinkMacSystemFont,
+               "Segoe UI", Roboto, sans-serif;
 }
 
 @theme inline {
@@ -27,80 +36,100 @@ html, body {
   min-height: 100%;
 }
 
-/* Hero Stagger Animations */
+/* ============================================================
+   HERO ANIMATIONS — staggered line-by-line reveal
+   ============================================================ */
+
+/* Nav */
 @keyframes navFadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(-8px); }
+  to   { opacity: 1; transform: translateY(0); }
 }
-
-@keyframes heroHeadlineReveal {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes heroDescFade {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes heroCtaFade {
-  from {
-    opacity: 0;
-    transform: translateY(12px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 .animate-nav {
   animation: navFadeIn 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.animate-headline {
-  animation: heroHeadlineReveal 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.15s backwards;
+/* Hero heading — Space Grotesk 700 via --font-hero (set in :root) */
+.hero-headline {
+  font-family:    var(--font-hero);
+  font-weight:    700;
+  font-size:      clamp(2.8rem, 6.5vw, 5rem);
+  line-height:    1.06;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  color:          #ffffff;
+  margin:         0;
+  padding:        0;
+  overflow:       hidden;
 }
 
-.animate-desc {
-  animation: heroDescFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.3s backwards;
+/* Individual headline lines */
+.hero-line {
+  display:     block;
+  color:       #ffffff;
+  /* initial state is set inline by HeroHeadline.tsx */
 }
 
-.animate-cta {
-  animation: heroCtaFade 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s backwards;
+.hero-line--red {
+  color: #ff1a1a;
 }
 
+.hero-line--last {
+  /* no extra rule needed — placeholder for potential future tweak */
+}
+
+/* ── Description fade-up ── */
+@keyframes heroDescReveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+.hero-desc {
+  /* 4 lines × 110ms stagger + 650ms duration ≈ 1080ms total headline
+     Description starts ~150ms after last line begins = ~700ms */
+  animation: heroDescReveal 560ms cubic-bezier(0.16, 1, 0.3, 1) 780ms both;
+}
+
+/* ── Buttons staggered ── */
+@keyframes heroBtnReveal {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+.hero-btn-1 {
+  animation: heroBtnReveal 480ms cubic-bezier(0.16, 1, 0.3, 1) 1000ms both;
+}
+.hero-btn-2 {
+  animation: heroBtnReveal 480ms cubic-bezier(0.16, 1, 0.3, 1) 1080ms both;
+}
+
+/* ── Public link ── */
+@keyframes heroLinkReveal {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.hero-public-link {
+  animation: heroLinkReveal 500ms cubic-bezier(0.16, 1, 0.3, 1) 1200ms both;
+}
+
+/* ── Character entrance + infinite float ── */
 @keyframes heroCharacterFade {
-  from {
-    opacity: 0;
-    transform: translateY(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
 }
 
+@keyframes characterFloat {
+  0%,  100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-6px); }
+}
+
+/* Wrapper that receives the entrance animation */
 .animate-character {
   animation: heroCharacterFade 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.35s backwards;
+}
+
+/* Inner wrapper that floats continuously after entrance */
+.character-float {
+  animation: characterFloat 4.5s ease-in-out 1.4s infinite;
+  will-change: transform;
 }
 
 /* RetainAI Cinematic Red Left-to-Right Fill Button */
@@ -218,18 +247,39 @@ html, body {
 
 /* Accessibility: respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
+  /* Hero entrance animations */
   .animate-nav,
   .animate-headline,
   .animate-desc,
   .animate-cta,
+  .animate-character,
+  .hero-desc,
+  .hero-btn-1,
+  .hero-btn-2,
+  .hero-public-link,
+  /* Button fill transitions */
   .btn-red-fill::before,
   .btn-red-fill .btn-content,
   .btn-red-secondary::before,
-  .btn-red-secondary .btn-content,
+  .btn-red-secondary .btn-content {
+    animation-duration:        0.01ms !important;
+    animation-iteration-count: 1      !important;
+    transition-duration:       0.01ms !important;
+  }
+  /* Disable the floating character bob */
+  .character-float {
+    animation: none !important;
+  }
+  /* Ensure everything is visible without animation */
+  .hero-line,
+  .hero-desc,
+  .hero-btn-1,
+  .hero-btn-2,
+  .hero-public-link {
+    opacity:   1 !important;
+    transform: none !important;
+  }
   * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
 }
@@ -842,15 +892,166 @@ nextjs-portal,
               inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
+/* ============================================================
+   NAVBAR ACCENT INTERACTION — Perimeter Border-Tracing Animation
+   Traces border from TOP CENTER (0deg) around both sides to BOTTOM CENTER (180deg)
+   ============================================================ */
+
+@property --border-angle {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+.nav-trace-btn {
+  --border-angle: 0deg;
+  position: relative;
+  overflow: visible;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+  border-radius: 0.75rem; /* rounded-xl (12px) */
+  color: rgba(255, 255, 255, 0.88);
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    --border-angle 400ms ease-out,
+    background-color 300ms ease-out,
+    border-color 300ms ease-out,
+    color 300ms ease-out,
+    box-shadow 300ms ease-out;
+}
+
+.nav-trace-btn::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: inherit;
+  border: 1.5px solid #67E8F9;
+  box-shadow: 0 0 6px rgba(103, 232, 249, 0.35);
+  pointer-events: none;
+  z-index: 2;
+  -webkit-mask: conic-gradient(
+    from 0deg at 50% 50%,
+    #000 0deg,
+    #000 var(--border-angle, 0deg),
+    transparent var(--border-angle, 0deg),
+    transparent calc(360deg - var(--border-angle, 0deg)),
+    #000 calc(360deg - var(--border-angle, 0deg)),
+    #000 360deg
+  );
+  mask: conic-gradient(
+    from 0deg at 50% 50%,
+    #000 0deg,
+    #000 var(--border-angle, 0deg),
+    transparent var(--border-angle, 0deg),
+    transparent calc(360deg - var(--border-angle, 0deg)),
+    #000 calc(360deg - var(--border-angle, 0deg)),
+    #000 360deg
+  );
+  opacity: 0;
+  transition: opacity 150ms ease-out;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-trace-btn:hover {
+    --border-angle: 180deg;
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: rgba(255, 255, 255, 0.16);
+    color: rgba(255, 255, 255, 0.95);
+    transition:
+      --border-angle 600ms ease-out,
+      background-color 300ms ease-out,
+      border-color 300ms ease-out,
+      color 300ms ease-out;
+  }
+
+  .nav-trace-btn:hover::after {
+    opacity: 1;
+    transition: opacity 80ms ease-out;
+  }
+}
+
+.nav-trace-btn:focus-visible {
+  --border-angle: 180deg;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.95);
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(103, 232, 249, 0.35);
+}
+
+.nav-trace-btn:focus-visible::after {
+  opacity: 1;
+  transition: opacity 80ms ease-out;
+}
+
+.nav-trace-btn[aria-current="page"],
+.nav-trace-btn.active {
+  --border-angle: 180deg;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.16);
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.nav-trace-btn[aria-current="page"]::after,
+.nav-trace-btn.active::after {
+  opacity: 1;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .atmospheric-glow-a,
   .atmospheric-glow-b {
     animation: none !important;
   }
   .retain-connect-btn,
-  .retain-connect-btn::before {
+  .retain-connect-btn::before,
+  .nav-trace-btn,
+  .nav-trace-btn::after,
+  .infinity-loop-pulse,
+  .animate-status-fade {
+    animation: none !important;
     transition: none !important;
   }
+}
+
+/* ============================================================
+   RETAINAI UNIFIED LOADING EXPERIENCE
+   ============================================================ */
+
+@keyframes infinityFlow {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
+    stroke-dashoffset: -100;
+  }
+}
+
+.infinity-loop-pulse {
+  animation: infinityFlow 2.2s linear infinite;
+}
+
+@keyframes statusFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-status-fade {
+  animation: statusFadeIn 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Page Section Enter (Scenario 7) */
+.page-section-enter {
+  animation: statusFadeIn 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
 

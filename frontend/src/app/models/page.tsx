@@ -23,7 +23,7 @@ export default function ModelsPage() {
   const s = status.data, m = metrics.data;
 
   return (
-    <main className="mx-auto w-full max-w-6xl space-y-4 px-4 py-6">
+    <main className="mx-auto w-full max-w-6xl space-y-4 px-4 py-6 page-section-enter">
       <Link href="/" className="flex items-center gap-1 text-sm text-neutral-500 hover:underline"><ArrowLeft className="size-4" /> Home</Link>
       <h1 className="text-3xl font-bold">Model status</h1>
 
