@@ -1,14 +1,24 @@
 "use client";
 
-import { Loader2 } from "lucide-react";
+import { AlertCircle, Loader2 } from "lucide-react";
 import type { ReactNode } from "react";
 
-export function Card({ title, children, right }: { title?: string; children: ReactNode; right?: ReactNode }) {
+export function Card({
+  title,
+  children,
+  right,
+  className = "",
+}: {
+  title?: string;
+  children: ReactNode;
+  right?: ReactNode;
+  className?: string;
+}) {
   return (
-    <section className="rounded-xl border border-neutral-400/30 p-4">
+    <section className={`rounded-2xl border border-white/[0.08] bg-[#09090d]/85 backdrop-blur-xl p-5 shadow-2xl transition-all duration-200 hover:border-white/[0.13] ${className}`}>
       {(title || right) && (
-        <div className="mb-3 flex items-center justify-between">
-          <h2 className="font-semibold">{title}</h2>
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-2 border-b border-white/[0.05] pb-3">
+          <h2 className="text-sm font-semibold tracking-wide text-white uppercase">{title}</h2>
           {right}
         </div>
       )}
@@ -17,34 +27,70 @@ export function Card({ title, children, right }: { title?: string; children: Rea
   );
 }
 
-export function Stat({ label, value, sub }: { label: string; value: string; sub?: string }) {
+export function Stat({
+  label,
+  value,
+  sub,
+  icon,
+  accentColor,
+  className = "",
+}: {
+  label: string;
+  value: string;
+  sub?: string;
+  icon?: ReactNode;
+  accentColor?: string;
+  className?: string;
+}) {
   return (
-    <div className="rounded-xl border border-neutral-400/30 p-3">
-      <div className="text-xs uppercase text-neutral-500">{label}</div>
-      <div className="text-2xl font-semibold">{value}</div>
-      {sub && <div className="text-xs text-neutral-500">{sub}</div>}
+    <div className={`relative overflow-hidden rounded-2xl border border-white/[0.08] bg-[#09090d]/85 backdrop-blur-xl p-4 shadow-lg transition-all duration-200 hover:border-white/[0.14] ${className}`}>
+      {accentColor && (
+        <div
+          className="absolute top-0 left-0 right-0 h-[2px] opacity-80"
+          style={{ backgroundColor: accentColor }}
+        />
+      )}
+      <div className="flex items-center justify-between gap-2">
+        <div className="text-[11px] font-semibold uppercase tracking-wider text-neutral-400">{label}</div>
+        {icon && (
+          <div
+            className="flex size-7 items-center justify-center rounded-lg bg-white/[0.03] border border-white/[0.06]"
+            style={accentColor ? { color: accentColor } : undefined}
+          >
+            {icon}
+          </div>
+        )}
+      </div>
+      <div className="mt-2 text-2xl font-bold tracking-tight text-white">{value}</div>
+      {sub && <div className="mt-1 text-xs text-neutral-400 font-medium">{sub}</div>}
     </div>
   );
 }
 
 export function Loading({ label = "Loading…" }: { label?: string }) {
   return (
-    <div className="flex items-center gap-2 py-6 text-neutral-500">
-      <Loader2 className="size-4 animate-spin" /> {label}
+    <div className="flex items-center justify-center gap-3 py-12 text-sm text-neutral-400">
+      <Loader2 className="size-4 animate-spin text-[#ff1f3d]" />
+      <span className="tracking-wide font-mono text-xs uppercase">{label}</span>
     </div>
   );
 }
 
 export function ErrorBox({ error }: { error: unknown }) {
   return (
-    <p role="alert" className="rounded-lg border border-red-500/40 bg-red-500/10 p-3 text-sm text-red-500">
-      {error instanceof Error ? error.message : "Something went wrong."}
-    </p>
+    <div role="alert" className="flex items-center gap-3 rounded-xl border border-red-500/30 bg-red-950/30 p-4 text-xs text-red-200 backdrop-blur-md">
+      <AlertCircle className="size-4 text-red-400 shrink-0" />
+      <span>{error instanceof Error ? error.message : "Something went wrong."}</span>
+    </div>
   );
 }
 
 export function Empty({ children }: { children: ReactNode }) {
-  return <p className="py-6 text-center text-sm text-neutral-500">{children}</p>;
+  return (
+    <div className="py-12 text-center text-xs text-neutral-500 font-mono uppercase tracking-wider">
+      {children}
+    </div>
+  );
 }
 
-export const axisStyle = { fontSize: 11, fill: "#888" };
+export const axisStyle = { fontSize: 11, fill: "rgba(255, 255, 255, 0.45)" };
