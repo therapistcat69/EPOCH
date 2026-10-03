@@ -5,6 +5,8 @@ import { Loader2, Search } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import ModelProvenance from "@/components/ml/ModelProvenance";
+import TranscriptAnalyzer from "@/components/ml/TranscriptAnalyzer";
 import { analyze, getRecent } from "@/lib/api";
 
 export default function Home() {
@@ -17,7 +19,7 @@ export default function Home() {
   });
 
   return (
-    <main className="mx-auto w-full max-w-2xl px-4 py-16">
+    <main className="mx-auto w-full max-w-4xl px-4 py-16">
       <h1 className="text-4xl font-bold tracking-tight">Retention Predictor</h1>
       <p className="mt-2 text-lg text-neutral-500">Find the Drop-Off Before You Publish</p>
 
@@ -42,15 +44,22 @@ export default function Home() {
           Analyze Video
         </button>
       </form>
-      <Link href="/login" className="mt-3 inline-block text-sm text-neutral-500 hover:underline">
-        Connect YouTube to see your channel analytics →
-      </Link>
+      <div className="mt-3 flex flex-wrap gap-4 text-sm text-neutral-500">
+        <Link href="/login" className="hover:underline">Connect YouTube to see your channel analytics →</Link>
+        <Link href="/trends" className="hover:underline">Trend Radar →</Link>
+        <Link href="/benchmark" className="hover:underline">Genre benchmark →</Link>
+        <Link href="/models" className="hover:underline">Model status →</Link>
+      </div>
+
+      <div className="mt-3"><ModelProvenance /></div>
 
       {run.isError && (
         <p role="alert" className="mt-4 rounded-lg border border-red-500/40 bg-red-500/10 p-3 text-red-500">
           {run.error.message}
         </p>
       )}
+
+      <TranscriptAnalyzer />
 
       {recent.data && recent.data.length > 0 && (
         <section className="mt-12">

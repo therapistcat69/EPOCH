@@ -1,0 +1,20 @@
+# RetainAI ML engine (src/, notebooks/, tests/). The web backend has its own backend/requirements.txt.
+# Works on CPU (laptop / Google Colab); a CUDA build of PyTorch is used automatically if installed.
+numpy>=2.0
+pandas>=2.2
+scipy>=1.13
+scikit-learn>=1.5
+xgboost>=2.1
+torch>=2.4
+sentence-transformers>=3.0
+shap>=0.46
+joblib>=1.4
+vaderSentiment>=3.3
+tqdm>=4.66
+matplotlib>=3.8
+pydantic>=2.8
+# notebooks / tests
+nbformat>=5.10
+nbclient>=0.10
+ipykernel>=6.29
+pytest>=8.0

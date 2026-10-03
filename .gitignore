@@ -28,3 +28,9 @@ next-env.d.ts
 .DS_Store
 .vscode/
 .idea/
+
+# ML: regenerable caches / candidates / run logs (the production artifact models/retention_model_v1 IS tracked)
+data/processed/
+models/candidates/
+experiments/*.log
+experiments/*.err

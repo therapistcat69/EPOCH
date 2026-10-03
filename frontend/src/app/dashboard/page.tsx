@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Audience, Traffic } from "@/components/dashboard/Breakdowns";
 import Overview from "@/components/dashboard/Overview";
+import ChannelIntelligence from "@/components/intel/ChannelIntelligence";
 import RetentionPanel from "@/components/dashboard/Retention";
 import { Empty, ErrorBox, Loading } from "@/components/dashboard/ui";
 import Videos from "@/components/dashboard/Videos";
@@ -14,7 +15,7 @@ import { ApiError } from "@/lib/api";
 import { api, type OwnedVideo, type Range } from "@/lib/creator-api";
 import { iso, rangeForDays, shortDate } from "@/lib/format";
 
-const TABS = ["Overview", "Videos", "Retention", "Audience", "Traffic"] as const;
+const TABS = ["Overview", "Channel Report", "Videos", "Retention", "Audience", "Traffic"] as const;
 type Tab = (typeof TABS)[number];
 const PRESETS: [string, number][] = [["Last 7 days", 7], ["Last 28 days", 28], ["Last 90 days", 90], ["Last 365 days", 365]];
 
@@ -85,6 +86,8 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="flex items-center gap-2">
+          <a href="/trends" className="rounded-lg border border-neutral-400/40 px-3 py-2 text-sm">Trends</a>
+          <a href="/benchmark" className="rounded-lg border border-neutral-400/40 px-3 py-2 text-sm">Benchmark</a>
           <button onClick={() => start.mutate()} disabled={syncing} className="flex items-center gap-2 rounded-lg bg-red-600 px-3 py-2 text-sm font-medium text-white disabled:opacity-60">
             {syncing ? <Loader2 className="size-4 animate-spin" /> : <RefreshCw className="size-4" />} Sync YouTube Data
           </button>
@@ -123,6 +126,7 @@ export default function Dashboard() {
 
       <main className="mt-4">
         {tab === "Overview" && <Overview range={range} subscribers={channel.data?.subscriber_count ?? null} />}
+        {tab === "Channel Report" && <ChannelIntelligence range={range} />}
         {tab === "Videos" && <Videos range={range} onOpenRetention={(v) => { setRetentionVideo(v); setTab("Retention"); }} />}
         {tab === "Audience" && <Audience range={range} />}
         {tab === "Traffic" && <Traffic range={range} />}

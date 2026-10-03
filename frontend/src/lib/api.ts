@@ -34,6 +34,20 @@ const MESSAGES: Record<string, string> = {
   SCOPE_MISSING: "Both YouTube permissions are required. Please sign in again and leave both boxes ticked.",
   NO_CHANNEL: "We connected your Google account, but no YouTube channel was found for this account.",
   API_KEY_RESTRICTED: "The server's API key is restricted and can't call the YouTube Data API.",
+  GROQ_NOT_CONFIGURED: "AI features aren't available: the server has no Groq API key yet.",
+  GROQ_RATE_LIMITED: "The AI service is rate limiting requests. Please retry in a moment.",
+  GROQ_TIMEOUT: "The AI service took too long to respond. Please try again.",
+  GROQ_UNAVAILABLE: "The AI service is temporarily unavailable.",
+  GROQ_INVALID_RESPONSE: "The AI service returned an unusable response. Please try again.",
+  GROQ_AUTH_FAILED: "The server's Groq API key was rejected.",
+  TRANSCRIPT_EMPTY: "That transcript is empty.",
+  TRANSCRIPT_PARSE_FAILED: "We couldn't read any cues from that file. Check it's valid SRT/VTT/TXT.",
+  TRANSCRIPTION_EMPTY: "No speech was detected in that audio.",
+  AUDIO_TOO_LARGE: "That audio file is too large. Compress or trim it (under ~24 MB).",
+  NO_VIDEOS: "No synced videos yet. Click “Sync YouTube Data” on the dashboard first.",
+  NO_TREND_RESULTS: "Not enough recent public videos were found for that selection. Try a wider time range or another subgenre.",
+  UNKNOWN_GENRE: "That genre isn't available.",
+  TOPIC_NOT_FOUND: "That topic isn't in the current sample.",
 };
 
 export function friendlyMessage(code: string): string {

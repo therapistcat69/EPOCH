@@ -125,7 +125,8 @@ function Drawer({ video, range, onClose, onRetention }: { video: OwnedVideo; ran
           <Stat label="Subs lost" value={compact(m.subscribers_lost)} />
         </div>
       )}
-      <button onClick={onRetention} className="mt-5 w-full rounded-lg bg-red-600 py-2 font-medium text-white">View audience retention</button>
+      <a href={`/video/${video.video_id}`} className="mt-5 block w-full rounded-lg bg-red-600 py-2 text-center font-medium text-white">Open video intelligence report</a>
+      <button onClick={onRetention} className="mt-2 w-full rounded-lg border border-neutral-400/40 py-2 font-medium">View audience retention</button>
     </aside>
   );
 }

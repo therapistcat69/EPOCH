@@ -21,6 +21,9 @@ def oauth_env(monkeypatch):
     monkeypatch.setenv("GOOGLE_REDIRECT_URI", "http://localhost:8000/api/auth/youtube/callback")
     monkeypatch.setenv("SESSION_SECRET", "test-session-secret-0123456789")
     monkeypatch.setenv("FRONTEND_URL", "http://localhost:3000")
+    monkeypatch.setenv("GROQ_API_KEY", "test-groq-key")
+    monkeypatch.setenv("GROQ_CHAT_MODEL", "test-chat-model")
+    monkeypatch.setenv("GROQ_TRANSCRIPTION_MODEL", "test-stt-model")
     get_settings.cache_clear()
     yield
     get_settings.cache_clear()

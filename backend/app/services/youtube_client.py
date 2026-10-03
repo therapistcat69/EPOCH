@@ -102,6 +102,16 @@ async def google_request(
     raw: bool = False,
 ) -> Any:
     """Single HTTP path for every Google API call. Never logs URLs, keys or tokens."""
+    from app.services import usage  # local import avoids a cycle at module load
+
+    if context == "analytics":
+        usage.track("analytics_calls")
+    elif "/search" in url:
+        usage.track("youtube_search_calls")
+    elif "/videos" in url:
+        usage.track("youtube_video_calls")
+    else:
+        usage.track("youtube_other_calls")
     params = dict(params or {})
     headers: dict[str, str] = {}
     if access_token:
@@ -178,6 +188,20 @@ class YouTubeClient:
         if page_token:
             params["pageToken"] = page_token
         return await self._get("playlistItems", params)
+
+    async def search(self, params: dict[str, Any]) -> dict:
+        """search.list: ~100 quota units per call. Callers must cache results."""
+        return await self._get("search", {"part": "snippet", "type": "video", "maxResults": 25, **params})
+
+    async def caption_tracks(self, video_id: str) -> dict:
+        return await self._get("captions", {"part": "snippet", "videoId": video_id})
+
+    async def download_caption(self, caption_id: str) -> str:
+        resp = await google_request(
+            "GET", f"{self._base}/captions/{caption_id}", params={"tfmt": "srt"},
+            access_token=self._token, api_key=self._key, context="data", raw=True,
+        )
+        return resp.text
 
     async def video_categories(self, ids: list[str], region: str = "US") -> dict:
         return await self._get(

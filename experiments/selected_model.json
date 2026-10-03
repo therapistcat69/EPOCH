@@ -1,0 +1,19 @@
+{
+  "kind": "flat",
+  "family": "xgb",
+  "model_name": "xgb_delta",
+  "features": "hand+emb",
+  "segment_size": 15,
+  "embedding_model": "all-MiniLM-L6-v2",
+  "target": "drop_target",
+  "params": {
+    "max_depth": 5,
+    "learning_rate": 0.03,
+    "min_child_weight": 5
+  },
+  "arch": null,
+  "cfg": null,
+  "use_embedding": true,
+  "selection_rule": "validation MAE within tolerance, then risk top-3, then cost, then interpretability (see docs/model-selection.md)",
+  "val_mae": 4.026736722207852
+}

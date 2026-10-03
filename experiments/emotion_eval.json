@@ -1,0 +1,169 @@
+{
+  "n_sentences": 20,
+  "lexicon_emotion_accuracy_on_emotional_sentences": 0.882,
+  "lexicon_correct_on_neutral_sentences": 1.0,
+  "vader_sentiment_sign_accuracy": 0.8,
+  "note": "small hand-written gaming set (20 sentences); indicative only. VADER has no emotion categories (excitement/surprise/fear...), so only sentiment sign is compared. Both are lexical and miss sarcasm/context.",
+  "detail": [
+    {
+      "text": "Yes! We finally did it, first try, let's go!",
+      "expected": "excitement",
+      "lexicon": "excitement",
+      "expected_sign": "pos",
+      "vader": "pos",
+      "vader_compound": 0.508
+    },
+    {
+      "text": "That clutch was insane, absolutely epic!",
+      "expected": "excitement",
+      "lexicon": "excitement",
+      "expected_sign": "pos",
+      "vader": "neg",
+      "vader_compound": -0.457
+    },
+    {
+      "text": "No way, I did not expect that to happen!",
+      "expected": "surprise",
+      "lexicon": "surprise",
+      "expected_sign": "pos",
+      "vader": "neg",
+      "vader_compound": -0.359
+    },
+    {
+      "text": "Wait, what? Where did that boss come from?",
+      "expected": "surprise",
+      "lexicon": "surprise",
+      "expected_sign": "neu",
+      "vader": "neu",
+      "vader_compound": 0.0
+    },
+    {
+      "text": "My health is almost gone and one wrong move ends the run.",
+      "expected": "fear",
+      "lexicon": "fear",
+      "expected_sign": "neg",
+      "vader": "neg",
+      "vader_compound": -0.477
+    },
+    {
+      "text": "I am so scared, he is getting closer and I can barely move.",
+      "expected": "fear",
+      "lexicon": "fear",
+      "expected_sign": "neg",
+      "vader": "neg",
+      "vader_compound": -0.578
+    },
+    {
+      "text": "That hit was so unfair, this is incredibly frustrating.",
+      "expected": "anger",
+      "lexicon": "anger",
+      "expected_sign": "neg",
+      "vader": "neg",
+      "vader_compound": -0.801
+    },
+    {
+      "text": "Seriously? That is cheating, I hate this boss.",
+      "expected": "anger",
+      "lexicon": "surprise",
+      "expected_sign": "neg",
+      "vader": "neg",
+      "vader_compound": -0.84
+    },
+    {
+      "text": "I died again, back to the start, that really hurts.",
+      "expected": "sadness",
+      "lexicon": "sadness",
+      "expected_sign": "neg",
+      "vader": "neg",
+      "vader_compound": -0.79
+    },
+    {
+      "text": "Unfortunately we lost the match and I am sorry, guys.",
+      "expected": "sadness",
+      "lexicon": "sadness",
+      "expected_sign": "neg",
+      "vader": "neg",
+      "vader_compound": -0.612
+    },
+    {
+      "text": "I love this game, the map is beautiful and the music is amazing.",
+      "expected": "joy",
+      "lexicon": "joy",
+      "expected_sign": "pos",
+      "vader": "pos",
+      "vader_compound": 0.917
+    },
+    {
+      "text": "This is so much fun, I am really enjoying this part.",
+      "expected": "joy",
+      "lexicon": "joy",
+      "expected_sign": "pos",
+      "vader": "pos",
+      "vader_compound": 0.806
+    },
+    {
+      "text": "This boss is brutal but the fight feels so satisfying.",
+      "expected": "joy",
+      "lexicon": "joy",
+      "expected_sign": "pos",
+      "vader": "neu",
+      "vader_compound": -0.131
+    },
+    {
+      "text": "The map has three zones and a river in the middle.",
+      "expected": "none",
+      "lexicon": "none",
+      "expected_sign": "neu",
+      "vader": "neu",
+      "vader_compound": 0.0
+    },
+    {
+      "text": "You can find the key in the second room on the left.",
+      "expected": "none",
+      "lexicon": "none",
+      "expected_sign": "neu",
+      "vader": "neu",
+      "vader_compound": 0.0
+    },
+    {
+      "text": "The patch changed the damage values for the shotgun.",
+      "expected": "none",
+      "lexicon": "none",
+      "expected_sign": "neu",
+      "vader": "neu",
+      "vader_compound": -0.128
+    },
+    {
+      "text": "OMG I cannot believe we actually won that, what a clutch!",
+      "expected": "excitement",
+      "lexicon": "surprise",
+      "expected_sign": "pos",
+      "vader": "pos",
+      "vader_compound": 0.611
+    },
+    {
+      "text": "Oh no, I fell off the map again, this is ridiculous.",
+      "expected": "anger",
+      "lexicon": "anger",
+      "expected_sign": "neg",
+      "vader": "neg",
+      "vader_compound": -0.361
+    },
+    {
+      "text": "The enemy team is tense and panicking near the final circle.",
+      "expected": "fear",
+      "lexicon": "fear",
+      "expected_sign": "neg",
+      "vader": "neg",
+      "vader_compound": -0.832
+    },
+    {
+      "text": "Honestly the story in this game made me really sad.",
+      "expected": "sadness",
+      "lexicon": "sadness",
+      "expected_sign": "neg",
+      "vader": "neu",
+      "vader_compound": -0.101
+    }
+  ]
+}

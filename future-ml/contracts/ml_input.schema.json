@@ -1,0 +1,127 @@
+{
+  "$defs": {
+    "MLRetentionInput": {
+      "properties": {
+        "time_ratio": {
+          "default": [],
+          "items": {
+            "type": "number"
+          },
+          "title": "Time Ratio",
+          "type": "array"
+        },
+        "audience_watch_ratio": {
+          "default": [],
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Audience Watch Ratio",
+          "type": "array"
+        },
+        "relative_retention_performance": {
+          "default": [],
+          "items": {
+            "anyOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "title": "Relative Retention Performance",
+          "type": "array"
+        }
+      },
+      "title": "MLRetentionInput",
+      "type": "object"
+    }
+  },
+  "description": "Full future model input (feature-store contract). Unavailable groups are empty, never faked.",
+  "properties": {
+    "feature_schema_version": {
+      "default": "1.0",
+      "title": "Feature Schema Version",
+      "type": "string"
+    },
+    "video_id": {
+      "title": "Video Id",
+      "type": "string"
+    },
+    "duration_seconds": {
+      "anyOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Duration Seconds"
+    },
+    "metadata": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Metadata",
+      "type": "object"
+    },
+    "analytics": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Analytics",
+      "type": "object"
+    },
+    "retention": {
+      "$ref": "#/$defs/MLRetentionInput",
+      "default": {
+        "time_ratio": [],
+        "audience_watch_ratio": [],
+        "relative_retention_performance": []
+      }
+    },
+    "transcript_features": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Transcript Features",
+      "type": "object"
+    },
+    "audio_features": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Audio Features",
+      "type": "object"
+    },
+    "visual_features": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Visual Features",
+      "type": "object"
+    },
+    "title_features": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Title Features",
+      "type": "object"
+    },
+    "genre_features": {
+      "additionalProperties": true,
+      "default": {},
+      "title": "Genre Features",
+      "type": "object"
+    }
+  },
+  "required": [
+    "video_id"
+  ],
+  "title": "MLInput",
+  "type": "object"
+}

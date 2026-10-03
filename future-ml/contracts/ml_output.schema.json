@@ -1,0 +1,85 @@
+{
+  "$defs": {
+    "RiskSegment": {
+      "properties": {
+        "start_seconds": {
+          "title": "Start Seconds",
+          "type": "number"
+        },
+        "end_seconds": {
+          "title": "End Seconds",
+          "type": "number"
+        },
+        "risk": {
+          "title": "Risk",
+          "type": "number"
+        },
+        "reason_features": {
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "title": "Reason Features",
+          "type": "array"
+        }
+      },
+      "required": [
+        "start_seconds",
+        "end_seconds",
+        "risk"
+      ],
+      "title": "RiskSegment",
+      "type": "object"
+    }
+  },
+  "description": "Shape the future model service must return from POST /api/ml/predict.",
+  "properties": {
+    "video_id": {
+      "title": "Video Id",
+      "type": "string"
+    },
+    "model_name": {
+      "title": "Model Name",
+      "type": "string"
+    },
+    "model_version": {
+      "title": "Model Version",
+      "type": "string"
+    },
+    "retention_curve": {
+      "default": [],
+      "items": {
+        "type": "number"
+      },
+      "title": "Retention Curve",
+      "type": "array"
+    },
+    "risk_segments": {
+      "default": [],
+      "items": {
+        "$ref": "#/$defs/RiskSegment"
+      },
+      "title": "Risk Segments",
+      "type": "array"
+    },
+    "confidence": {
+      "anyOf": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "default": null,
+      "title": "Confidence"
+    }
+  },
+  "required": [
+    "video_id",
+    "model_name",
+    "model_version"
+  ],
+  "title": "MLOutput",
+  "type": "object"
+}

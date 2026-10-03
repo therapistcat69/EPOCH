@@ -76,12 +76,11 @@ async def test_unknown_analysis(api):
 
 
 async def test_ml_predict_not_implemented(api):
-    payload = {
-        "video_id": VIDEO_ID,
-        "features": {"video_id": VIDEO_ID, "title": "t", "duration_seconds": 1},
-    }
-    r = await api.post("/api/ml/predict", json=payload)
+    # no model artifact loaded in unit tests -> controlled 501 (the model lifecycle is covered in test_ml_api.py)
+    r = await api.post("/api/ml/predict", json={"video_id": VIDEO_ID, "video": {}, "transcript": {}})
     assert r.status_code == 501 and r.json()["error"]["code"] == "ML_NOT_IMPLEMENTED"
+    st = (await api.get("/api/ml/status")).json()
+    assert st["model_available"] is False and "not connected" in st["message"].lower()
 
 
 async def test_creator_routes_require_login(api):

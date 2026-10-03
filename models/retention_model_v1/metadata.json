@@ -1,0 +1,81 @@
+{
+  "model_name": "xgb_delta",
+  "model_version": "v1",
+  "kind": "flat",
+  "family": "xgb",
+  "target": "drop_target",
+  "dataset_version": "synthetic_v1",
+  "feature_schema_version": "1.0",
+  "trained_on": "synthetic",
+  "data_mode": "synthetic",
+  "real_validation_available": false,
+  "segment_seconds": 15,
+  "embedding_model": "all-MiniLM-L6-v2",
+  "embedding_model_key": "minilm",
+  "features": "hand+emb",
+  "seed": 42,
+  "ensemble_seeds": [
+    11,
+    22,
+    33,
+    44,
+    55
+  ],
+  "training_date": "2026-10-02T22:55:11+00:00",
+  "risk_tau": 0.855000000000004,
+  "risk_threshold": 0.7856925845146182,
+  "uncertainty": {
+    "available": true,
+    "method": "ensemble of 5 seeds",
+    "z": 18.427264827884823,
+    "validation_coverage": 0.8999713384924047,
+    "test_coverage": 0.8024620669911251,
+    "rule": "z set on validation for 90 % coverage; marked available only if test coverage is within 80-97 %"
+  },
+  "test_metrics": {
+    "regression": {
+      "mae": 4.824385948011034,
+      "rmse": 5.993367747045321,
+      "r2": 0.7902368008437604,
+      "pearson": 0.8898914746672089,
+      "spearman": 0.877256765439589
+    },
+    "curve": {
+      "area_between_curves": 3577.253549731562,
+      "avg_pointwise_error": 4.675563120002454,
+      "max_error": 6.6328430530605305,
+      "curve_shape_corr": 0.9930684483738186,
+      "decline_shape_corr": 0.980614371335051
+    },
+    "risk": {
+      "risk_recall": 0.6296809986130375,
+      "risk_precision": 0.8376383763837638,
+      "top1_hit": 1.0,
+      "top3_hit": 1.0,
+      "top5_hit": 1.0,
+      "chance_top1": 0.20383627883167477,
+      "chance_top3": 0.49163527060642637,
+      "chance_top5": 0.6721534399969723,
+      "precision_lift": 4.13939741339161,
+      "risk_iou": 0.5933948217981831,
+      "n_risk_segments": 721,
+      "base_rate": 0.20235756385068762
+    }
+  },
+  "versions": {
+    "python": "3.12.0",
+    "numpy": "2.5.3",
+    "pandas": "3.0.6",
+    "sklearn": "1.9.1",
+    "xgboost": "3.4.1",
+    "torch": "2.11.0+cu128",
+    "sentence_transformers": "6.1.0",
+    "shap": "0.52.0"
+  },
+  "note": "Trained on SYNTHETIC data; not validated on real YouTube retention.",
+  "training_samples": 280,
+  "validation_samples": 70,
+  "test_samples": 70,
+  "synthetic_samples": 350,
+  "real_samples": 0
+}

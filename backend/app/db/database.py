@@ -1,6 +1,8 @@
 import logging
+import socket
 from collections.abc import AsyncIterator
 
+from sqlalchemy.engine import URL, make_url
 from sqlalchemy.ext.asyncio import AsyncEngine, AsyncSession, async_sessionmaker, create_async_engine
 from sqlalchemy.orm import DeclarativeBase
 
@@ -36,12 +38,25 @@ def resolve_database_url(raw: str) -> tuple[str, str]:
     return SQLITE_FALLBACK_URL, "sqlite-fallback"
 
 
+def _prefer_ipv4(url: str) -> str | URL:
+    """Supabase's pooler publishes IPv6/NAT64 addresses that hang on many networks.
+    Resolve to IPv4 up front (credentials are percent-decoded by make_url)."""
+    parsed = make_url(url)
+    try:
+        ipv4 = socket.getaddrinfo(parsed.host, parsed.port or 5432, socket.AF_INET)[0][4][0]
+    except (socket.gaierror, TypeError):
+        return url
+    return parsed.set(host=ipv4)
+
+
 def build_engine(raw_url: str | None = None) -> tuple[AsyncEngine, str]:
     url, label = resolve_database_url(raw_url if raw_url is not None else get_settings().database_url)
     kwargs: dict = {}
     if label == "postgres":
+        url = _prefer_ipv4(url)
+        kwargs["connect_args"] = {"timeout": 15}
         # Supabase's pooler (pgbouncer) does not support prepared statements.
-        kwargs["connect_args"] = {"statement_cache_size": 0, "prepared_statement_cache_size": 0}
+        kwargs["connect_args"].update({"statement_cache_size": 0, "prepared_statement_cache_size": 0})
         kwargs["pool_pre_ping"] = True
     return create_async_engine(url, **kwargs), label
 
